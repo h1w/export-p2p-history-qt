@@ -1,5 +1,4 @@
 #include "binance.h"
-#include "utils.h"
 
 Binance::Binance(QString _apiKey, QString _secretKey)
 {
@@ -12,6 +11,26 @@ Binance::Binance(QString _apiKey, QString _secretKey)
 Binance::~Binance()
 {
 
+}
+
+std::string Binance::CalculateHmacSHA256(std::string_view decodedKey, std::string_view msg)
+{
+    std::array<unsigned char, EVP_MAX_MD_SIZE> hash;
+    unsigned int hashLen;
+    HMAC(
+        EVP_sha256(),
+        decodedKey.data(),
+        static_cast<int>(decodedKey.size()),
+        reinterpret_cast<unsigned char const*>(msg.data()),
+        static_cast<int>(msg.size()),
+        hash.data(),
+        &hashLen
+        );
+    std::stringstream out;
+    for (unsigned int i=0; i < hashLen; i++) {
+        out << std::setfill('0') << std::setw(2) << std::right << std::hex << (int)hash.data()[i];
+    }
+    return out.str();
 }
 
 json Binance::makeRequest(std::string _tradeType, int _page)
@@ -35,7 +54,7 @@ json Binance::makeRequest(std::string _tradeType, int _page)
         std::string params="tradeType="+tradeType+"&startTimestamp="+startTimestamp+"&endTimestamp="+endTimestamp+"&page="+page+"&rows="+rows+"&recvWindow="+recvWindow+"&timestamp="+timestamp;
         std::string_view key_view{secretKey};
         std::string_view msg_view{params};
-        signature = CalcHmacSHA256(key_view, msg_view);
+        signature = CalculateHmacSHA256(key_view, msg_view);
 
         cpr::Response r = cpr::Get(
             cpr::Url{uri},

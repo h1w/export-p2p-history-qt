@@ -7,6 +7,14 @@
 #include <string>
 #include <nlohmann/json.hpp>
 #include <cpr/cpr.h>
+#include <openssl/sha.h>
+#include <openssl/hmac.h>
+#include <string>
+#include <string_view>
+#include <array>
+#include <sstream>
+#include <iomanip>
+#include <iostream>
 
 using json = nlohmann::json;
 
@@ -20,6 +28,8 @@ public:
 
 private:
     json makeRequest(std::string _tradeType, int _page);
+
+    std::string CalculateHmacSHA256(std::string_view decodedKey, std::string_view msg);
 
 private:
     std::string uri;

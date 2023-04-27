@@ -29,8 +29,6 @@ void MainWindow::fixDateTimeWidgets()
 
 void MainWindow::exportHistory()
 {
-    qDebug("export button");
-
     // read keys from config
     settings = new QSettings(settingsFilename, QSettings::IniFormat);
 
@@ -70,12 +68,29 @@ void MainWindow::exportHistory()
 
     // Get History from config exchanges
     // Binance
-    Binance binance(settingsData.Binance.apiKey, settingsData.Binance.secretKey);
-    json binanceOrderHistory = binance.getOrdersHistory(startTimestamp, endTimestamp);
+    // only if checkbox is enabled
+    if (findChild<QCheckBox*>("needExportBinance_checkBox")->isChecked())
+    {
+        Binance binance(settingsData.Binance.apiKey, settingsData.Binance.secretKey);
+        json binanceOrderHistory = binance.getOrdersHistory(startTimestamp, endTimestamp);
+    }
 
     // Pexpay
-    Binance pexpay(settingsData.Binance.apiKey, settingsData.Binance.secretKey);
-    json pexpayOrderHistory = binance.getOrdersHistory(startTimestamp, endTimestamp);
+    if (findChild<QCheckBox*>("needExportPexpay_checkBox")->isChecked())
+    {
+        Binance pexpay(settingsData.Pexpay.apiKey, settingsData.Pexpay.secretKey);
+        json pexpayOrderHistory = pexpay.getOrdersHistory(startTimestamp, endTimestamp);
+    }
+
+    // Huobi
+    if (findChild<QCheckBox*>("needExportHuobi_checkBox")->isChecked())
+    {
+    }
+
+    // Bybit
+    if (findChild<QCheckBox*>("needExportBybit_checkBox")->isChecked())
+    {
+    }
 }
 
 void MainWindow::openSettings()

@@ -22,12 +22,14 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+
         settingsdialog.h
         settingsdialog.cpp
         settingsdialog.ui
-        utils.h
+
         binance.h
         binance.cpp
+
         pexpay.h
         pexpay.cpp
         ${TS_FILES}
