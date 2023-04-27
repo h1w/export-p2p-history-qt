@@ -1,46 +1,33 @@
+#ifndef SETTINGSDIALOG_H
+#define SETTINGSDIALOG_H
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#include <QDialog>
+#include <QSettings>
+#include <QString>
+#include <QtUiTools/QtUiTools>
 
-#include <QMainWindow>
-#include "settingsdialog.h"
-#include <QDateTime>
-#include <nlohmann/json.hpp>
-#include <cpr/cpr.h>
-#include <string>
-#include <string_view>
+namespace Ui {
+class SettingsDialog;
+}
 
-#include "binance.h"
-#include "pexpay.h"
-
-using json = nlohmann::json;
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
-
-class MainWindow : public QMainWindow
-
+class SettingsDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    explicit SettingsDialog(QWidget *parent = nullptr);
+    ~SettingsDialog();
 
-    void fixDateTimeWidgets();
+    void readSettings();
+    void writeSettings();
 
-    void exportHistory();
-    void openSettings();
+    void fillSettingsDialogFields();
 
 private slots:
-    void on_exportButton_pushButton_clicked();
-
-    void on_settingsButton_pushButton_clicked();
+    void on_saveSettings_pushButton_clicked();
 
 private:
-    Ui::MainWindow *ui;
-    SettingsDialog *settingsDialog;
+    Ui::SettingsDialog *ui;
 
     struct settings_data_s {
         struct default_s {
@@ -75,4 +62,4 @@ private:
     settings_data_s settingsData;
 };
 
-#endif // MAINWINDOW_H
+#endif // SETTINGSDIALOG_H
