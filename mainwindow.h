@@ -12,6 +12,7 @@
 
 #include "binance.h"
 #include "pexpay.h"
+#include "bybit.h"
 
 using json = nlohmann::json;
 

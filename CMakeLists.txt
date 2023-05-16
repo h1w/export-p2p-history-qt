@@ -13,6 +13,9 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(OpenSSL REQUIRED)
 
+
+
+
 set(TS_FILES c2c-trade-history_en_US.ts)
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
@@ -32,6 +35,12 @@ set(PROJECT_SOURCES
 
         pexpay.h
         pexpay.cpp
+
+        bybit.h
+        bybit.cpp
+
+        export.h
+        export.cpp
         ${TS_FILES}
 )
 

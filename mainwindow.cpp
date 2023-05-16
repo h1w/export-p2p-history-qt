@@ -90,6 +90,8 @@ void MainWindow::exportHistory()
     // Bybit
     if (findChild<QCheckBox*>("needExportBybit_checkBox")->isChecked())
     {
+//        Bybit bybit(settingsData.Bybit.apiKey, settingsData.Bybit.secretKey);
+//        json bybitOrderHistory = bybit.getOrdersHistory(startTimestamp, endTimestamp);
     }
 }
 
